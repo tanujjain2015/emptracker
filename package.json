@@ -1,0 +1,33 @@
+{
+  "name": "emptracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "migrate": "mysql -u root -pNidhi@123  < source db/schemamysql2.sql",
+    "seed": "mysql -u root -pNidhi@123  < db/seed.sql",
+    "db": "sqlite3 db/emptracker.db",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@external:tanujjain2015/emptracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "console.table": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "inquirer": "^7.1.0",
+    "mysql2": "^2.1.0",
+    "querystring": "^0.2.0",
+    "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
+}
