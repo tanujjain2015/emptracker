@@ -4,6 +4,7 @@ const db = require('../../db/database');
 const {getUniqueId, inputCheck} = require('../../lib/commnLib')
 
 
+//route to get all roles. 
 router.get('/roles',(req, res)=>{
     const sql = "select id as RoleId, title as RoleTitle, salary as RoleSalary, department_id as DeptId from roletable";
     const params = [] ;
@@ -24,6 +25,7 @@ router.get('/roles',(req, res)=>{
         });
 });
 
+//route to retrieve roles based on Id.  
 router.get('/role/:id',(req, res)=>{
     //console.log(req.params.id);
     const sql = "select * from roletable where id like = ?";
@@ -45,6 +47,7 @@ router.get('/role/:id',(req, res)=>{
         });
 });
 
+//route to add roles by title. 
 router.get('/rolesbytitle',(req, res)=>{
     const sql = "select * from roletable where title like ?";
     const params = [req.query.title] ;
@@ -66,6 +69,7 @@ router.get('/rolesbytitle',(req, res)=>{
         });
 });
 
+//route to delete Role by id. 
 router.delete('/role/:id',(req, res)=>{
     console.log(req.params.id);
     const sql = "delete from roletable where id = ?";
@@ -87,7 +91,7 @@ router.delete('/role/:id',(req, res)=>{
         });
 });
 
-
+//route to add new role. 
 router.post('/role',(req, res)=>{
     const errors = inputCheck(req.body, 'title','salary','department_id');
     if (errors) {

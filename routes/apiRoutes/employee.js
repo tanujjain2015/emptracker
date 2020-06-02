@@ -4,6 +4,7 @@ const db = require('../../db/database');
 const {getUniqueId, inputCheck, getEmployeePatchAttribute} = require('../../lib/commnLib')
 
 
+//route to add all employees from employee table. 
 router.get('/employees',(req, res)=>{
     const sql = "select employee.id as EmpId, employee.first_name as FirstName, employee.last_name as LastName, roletable.title as Title, roletable.salary as Salary, department.name as DeptName from employee left join roletable on employee.role_id = roletable.id left join department on roletable.department_id = department.id";
     const params = [] ;
@@ -24,6 +25,7 @@ router.get('/employees',(req, res)=>{
         });
 });
 
+//route to retrieve empployee based on Id. 
 router.get('/employee/:id',(req, res)=>{
     const sql = "select * from employee where id = ?";
     const params = [req.params.id] ;
@@ -44,6 +46,7 @@ router.get('/employee/:id',(req, res)=>{
     });
 });
 
+//Route to retrieve Manager names
 router.get('/getManagerNames',(req, res)=>{
     const sql = "select concat(first_name, ' ', last_name) as ManagerName , employee.id  from employee left join roletable on employee.role_id = roletable.id where roletable.title like 'M%'";
     const params = [] ;
@@ -64,6 +67,7 @@ router.get('/getManagerNames',(req, res)=>{
     });
 });
 
+//route to retrieve manager name by Id. 
 router.get('/employee/manager/:manager_id',(req, res)=>{
     //console.log(req.params.id);
     const sql = "select id as EmpId , first_name as FirstName, last_name as LastName from employee where  manager_id = ?";
@@ -85,6 +89,7 @@ router.get('/employee/manager/:manager_id',(req, res)=>{
         });
 });
 
+//route to retrieve all employees based on department Id. 
 router.get('/employee/department/:department_id',(req, res)=>{
     const sql = "select employee.*, roletable.title as Title , department.name as department from employee left join roletable on  employee.role_id = roletable.id left join department on roletable.id = department.id where department.id = ?";
     const params = [req.params.department_id] ;
@@ -105,6 +110,7 @@ router.get('/employee/department/:department_id',(req, res)=>{
         });
 });
 
+//route to delete employee based on Emp Id. 
 router.delete('/employee/:id',(req, res)=>{
     console.log(req.params.id);
     const sql = "delete from employee where id = ?";
@@ -127,6 +133,7 @@ router.delete('/employee/:id',(req, res)=>{
 });
 
 
+//route to add new employee
 router.post('/employee',(req, res)=>{
     console.log(req.body.name);
     const errors = inputCheck(req.body, 'first_name','last_name','role_id','manager_id');
@@ -155,6 +162,7 @@ router.post('/employee',(req, res)=>{
         });
 });
 
+//route to update employee details based on id. 
 router.put('/employee/:id',(req, res)=>{
     const errors = inputCheck(req.body, 'first_name','last_name','role_id','manager_id');
     if (errors) {
@@ -180,6 +188,7 @@ router.put('/employee/:id',(req, res)=>{
         });
 });
 
+//route to patch employee details. 
 router.patch('/employee/:id',(req, res)=>{
     const keys = Object.keys(req.body);
     const keyArray = getEmployeePatchAttribute(req.body);

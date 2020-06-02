@@ -2,14 +2,16 @@ const Employee = require('./Employee');
 const Role = require('./Role');
 const Department = require('./Department');
 const inquirer = require('inquirer');
+const cTable = require('console.table');
 
-var output = [];
-
+//This is the main Employee Manager Class to control user input. This class invokes various methods in Employee, Role and Department class.  
 class EmployeeManager {
+    //Constructor to invoke ask method. 
     constructor() {
         this.ask();
     }
 
+    // View Option prompt various methods for user input 
     viewOptions() { 
       return [
             {
@@ -34,39 +36,101 @@ class EmployeeManager {
             }
         ];
     }
-        
+     
+    //ask() method invokes various child method to invoke child methods. 
     ask() {
         return inquirer.prompt(this.viewOptions())
         .then(answers => {
                 if (answers.EmployeeManager == "view all employees"){
-                    var promise = new Employee().viewAllEmployees();
+                    new Employee().viewAllEmployees()
+                    .then(response => {
+                        console.log(response);
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "view all departments"){
-                    new Department().getAllDepartment();
+                    new Department().getAllDepartment()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "view all roles"){
-                    new Role().getAllRoles();
+                    new Role().getAllRoles()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "add a department"){
-                    new Department().addDepartment();
+                    new Department().addDepartment()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "add a role"){
-                    new Role().addRole();
+                    new Role().addRole()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "add an employee"){
-                    new Employee().addEmployee();
+                    new Employee().addEmployee()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "update an employee role"){
-                    new Employee().updateEmployeeRole();
+                    new Employee().updateEmployeeRole()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "delete department"){
-                    new Department().deleteDepartment();
+                    new Department().deleteDepartment()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "delete role"){
-                    new Role().deleteRole();
+                    new Role().deleteRole()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
                 if (answers.EmployeeManager == "delete employee"){
-                    new Employee().deleteEmployee();
+                    new Employee().deleteEmployee()
+                    .then(response => {
+                        this.ask();
+                    })
+                    .catch (err => {
+                        console.log(err);
+                    });
                 }
             });
     }
